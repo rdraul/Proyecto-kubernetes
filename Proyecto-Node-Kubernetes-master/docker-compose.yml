@@ -1,0 +1,15 @@
+version: "3.8"
+services:
+  pod1:
+    build: ./pod1
+    ports:
+      - "3000:3000"
+    image: pod1
+  pod2:
+    build: ./pod2
+    ports:
+      - "3001:3001"
+    environment:
+      - "PORT=3001"
+    image: pod2
+    

@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pod2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pod2
+  template:
+    metadata:
+      labels:
+        app: pod2
+    spec:
+      containers:
+      - name: pod2
+        image: pod2:latest
+        imagePullPolicy: Never
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 3001
+        env:
+        - name: PORT
+          value: "3001"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pod2
+spec:
+  selector:
+    app: pod2
+  ports:
+  - port: 5001
+    targetPort: 3001
+  externalTrafficPolicy: Local
+  type: LoadBalancer
+        
